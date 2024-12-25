@@ -9,6 +9,8 @@ ENV PYTHONUNBUFFERED 1
 
 COPY requirements/ requirements/
 
+RUN pip install --no-cache-dir -r requirements/base.txt
+
 RUN pip install --no-cache-dir -r requirements/${ENVIRONMENT}.txt
 
 # COPY requirements.txt .
