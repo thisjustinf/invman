@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+source ../.env.staging
 
 echo "Starting staging initialization..."
 ./scripts/wait-for-db.sh db

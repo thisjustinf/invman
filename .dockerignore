@@ -1,4 +1,9 @@
 .dockerignore
 Dockerfile
-.git
+.git/
 .gitignore
+venv/
+node_modules/
+__pycache__/
+*.pyc
+*.md

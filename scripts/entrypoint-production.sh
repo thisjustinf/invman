@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+source ../.env.production
 
 echo "Starting production initialization..."
 ./scripts/wait-for-db.sh db

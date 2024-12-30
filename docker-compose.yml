@@ -18,7 +18,7 @@ services:
       redis:
         condition: service_healthy
     env_file:
-      - ./env/.env.${ENVIRONMENT}
+      - .env.${ENVIRONMENT}
     entrypoint: ./scripts/entrypoint-${ENVIRONMENT}.sh
     environment:
       <<: *common-variables
@@ -31,15 +31,18 @@ services:
     image: postgres:alpine
     container_name: invman_db_${ENVIRONMENT}
     env_file:
-      - ./env/.env.${ENVIRONMENT}
+      - .env.${ENVIRONMENT}
     environment:
-      - POSTGRES_USER={POSTGRES_USER}
-      - POSTGRES_PASSWORD={POSTGRES_PASSWORD}
-      - POSTGRES_DB={POSTGRES_DB}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_SERVER=${POSTGRES_SERVER}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./generate-sql.sh:/docker-entrypoint-initdb.d/generate-sql.sh
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s

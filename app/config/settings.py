@@ -8,10 +8,10 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = os.environ.get("POSTGRES_PASSWORD")
     POSTGRES_HOST: str = os.environ.get("POSTGRES_HOST")
     POSTGRES_PORT: int | str = os.environ.get("POSTGRES_PORT")
-    POSTGRES_NAME: str = os.environ.get("POSTGRES_NAME")
-    ASYNC_DATABASE_URI: any | None = (
+    POSTGRES_DB: str = os.environ.get("POSTGRES_DB")
+    ASYNC_DATABASE_URI: str = (
         f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{
-            POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_NAME}"
+            POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
     )
 
-    model_config = SettingsConfigDict(env_file=f"../../env/.env.{ENVIRONMENT}")
+    model_config = SettingsConfigDict(env_file=f"../../.env.{ENVIRONMENT}")

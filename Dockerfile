@@ -15,22 +15,21 @@ ENV PYTHONUNBUFFERED 1
 
 COPY requirements/ requirements/
 
+COPY scripts/ scripts/
+
 RUN pip install --no-cache-dir -r requirements/base.txt
 
 RUN pip install --no-cache-dir -r requirements/${ENVIRONMENT}.txt
 
-# COPY requirements.txt .
-
-# RUN pip install --no-cache-dir -r requirements.txt
+RUN rm -f /docker-entrypoint-initdb.d/initdb.sql
 
 COPY . .
 
 EXPOSE 8000
 
 # Make scripts executable
-RUN chmod +x scripts/entrypoint-${ENVIRONMENT}.sh
-RUN chmod +x scripts/setup-db.sh
-RUN chmod +x scripts/run-migrations.sh
+RUN chmod +x ./generate-sql.sh
+RUN chmod +x ./scripts/entrypoint-${ENVIRONMENT}.sh
+RUN chmod +x ./scripts/run-migrations.sh
 
-# CMD ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
 ENTRYPOINT [ "./scripts/entrypoint-${ENVIRONMENT}.sh" ]
