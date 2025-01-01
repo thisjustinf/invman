@@ -3,7 +3,9 @@ from sqlmodel import SQLModel, Field, Relationship
 from .mixins import AutoIncrementIDMixin, TimestampMixin
 
 
-class PurchaseOrderItem(AutoIncrementIDMixin, TimestampMixin, SQLModel, table=True):
+class PurchaseOrderItem(
+    AutoIncrementIDMixin, TimestampMixin, SQLModel, table=True
+):
     __tablename__ = "purchase_order_items"
 
     po_id: int = Field(foreign_key="purchase_orders.id")

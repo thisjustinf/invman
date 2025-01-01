@@ -2,9 +2,10 @@ from sqlmodel import Session
 
 from .base import BaseRepository
 from ..models.warehouse import Warehouse
+from ..models.mixins import AutoIncID
 
 
-class WarehouseRepository(BaseRepository[Warehouse]):
+class WarehouseRepository(BaseRepository[Warehouse, AutoIncID]):
     """_summary_
 
     Args:

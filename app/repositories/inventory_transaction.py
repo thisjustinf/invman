@@ -1,10 +1,13 @@
 from sqlmodel import Session
+from uuid import UUID
 
 from .base import BaseRepository
 from ..models.inventory_transaction import InventoryTransaction
 
 
-class InventoryTransactionRepository(BaseRepository[InventoryTransaction]):
+class InventoryTransactionRepository(
+    BaseRepository[InventoryTransaction, UUID]
+):
     """_summary_
 
     Args:

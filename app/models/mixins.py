@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import TypeVar
 from uuid import UUID, uuid4
 from sqlmodel import SQLModel, Field
 
-T = TypeVar("T")
+type SKU = str
+type AutoIncID = int
 
 
 class TimestampMixin(SQLModel):
@@ -19,7 +19,7 @@ class TimestampMixin(SQLModel):
 class AutoIncrementIDMixin(SQLModel):
     """Mixin for auto-incrementing integer primary keys"""
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: AutoIncID | None = Field(default=None, primary_key=True)
 
 
 class UUIDMixin(SQLModel):
@@ -31,7 +31,7 @@ class UUIDMixin(SQLModel):
 class SKUMixin(SQLModel):
     """Mixin for SKU-based primary keys"""
 
-    sku: str = Field(primary_key=True)
+    sku: SKU = Field(primary_key=True)
 
 
 class SoftDeleteMixin(SQLModel):

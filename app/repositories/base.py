@@ -1,10 +1,12 @@
 from typing import List
 from uuid import UUID
 
-from sqlmodel import Session, SQLModel, select, func
+from sqlmodel import Session, SQLModel, func, select
+
+from ..models.mixins import SKU, AutoIncID
 
 
-class BaseRepository[T: SQLModel, U: (UUID, int, str)]:
+class BaseRepository[T: SQLModel, U: (UUID, AutoIncID, SKU)]:
     def __init__(self, session: Session):
         self.session = session
 
