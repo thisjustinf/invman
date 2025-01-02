@@ -21,14 +21,12 @@ RUN pip install --no-cache-dir -r requirements/base.txt
 
 RUN pip install --no-cache-dir -r requirements/${ENVIRONMENT}.txt
 
-RUN rm -f /docker-entrypoint-initdb.d/initdb.sql
-
 COPY . .
 
 EXPOSE 8000
 
 # Make scripts executable
-RUN chmod +x ./generate-sql.sh
+# RUN chmod +x ./generate-sql.sh
 RUN chmod +x ./scripts/entrypoint-${ENVIRONMENT}.sh
 RUN chmod +x ./scripts/run-migrations.sh
 
