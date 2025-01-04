@@ -12,13 +12,13 @@ class BaseService[T: SQLModel, U: (UUID, AutoIncID, SKU)]:
         self.repository = repository
 
     def get_all(self) -> List[T]:
-        return self.repository.get_all()
+        return self.repository.get_all(T)
 
     def create(self, data: dict) -> None:
-        return self.repository.create()
+        return self.repository.create(T(**data))
 
     def update(self, id: U, data: dict) -> bool:
-        self.repository.update(id, data, T)
+        self.repository.update(id, T(**data), T)
 
     def delete(self, id: U) -> bool:
         return self.repository.delete(id, T)

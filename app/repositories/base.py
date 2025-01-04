@@ -33,6 +33,7 @@ class BaseRepository[T: SQLModel, U: (UUID, AutoIncID, SKU)]:
         return self.session.exec(
             select(func.count()).select_from(entity)
         ).scalar_one()
-        
-    def update(self, id: U, item: T, entity: T) -> None: # CODE COMMENT: This method is not implemented yet
+
+    # CODE COMMENT: This method is not implemented yet
+    def update(self, id: U, item: T, entity: T) -> None:
         raise NotImplementedError
