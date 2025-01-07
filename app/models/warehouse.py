@@ -1,6 +1,13 @@
 from sqlmodel import SQLModel, Relationship
+
+from app.schemas.update import UpdateSchema
 from .mixins import AutoIncrementIDMixin, TimestampMixin, SoftDeleteMixin
-# from .inventory_item import InventoryItem
+
+
+class WarehouseDTO(UpdateSchema):
+    name: str
+    address: str
+    contact_info: str
 
 
 class Warehouse(
@@ -12,5 +19,4 @@ class Warehouse(
     address: str
     contact_info: str
 
-    inventory_items: list["InventoryItem"] = Relationship(
-        back_populates="warehouse")
+    inventory_items: list["InventoryItem"] = Relationship(back_populates="warehouse")

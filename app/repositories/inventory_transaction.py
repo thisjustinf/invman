@@ -1,12 +1,12 @@
-from sqlmodel import Session
+from sqlmodel.ext.asyncio.session import AsyncSession
 from uuid import UUID
 
 from .base import BaseRepository
-from ..models.inventory_transaction import InventoryTransaction
+from ..models.inventory_transaction import InventoryTransaction, InventoryTransactionDTO
 
 
 class InventoryTransactionRepository(
-    BaseRepository[InventoryTransaction, UUID]
+    BaseRepository[InventoryTransaction, UUID, InventoryTransactionDTO]
 ):
     """_summary_
 
@@ -14,5 +14,5 @@ class InventoryTransactionRepository(
         BaseRepository (InventoryTransaction): _description_
     """
 
-    def __init__(self, session: Session):
+    def __init__(self, session: AsyncSession):
         super().__init__(session)

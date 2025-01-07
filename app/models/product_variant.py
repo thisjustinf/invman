@@ -1,10 +1,15 @@
 from sqlmodel import SQLModel, Field, Column, JSON, Relationship
-from pydantic import condecimal
+from pydantic import BaseModel, condecimal
 
-# from app.models.inventory_item import InventoryItem
+from app.schemas.update import UpdateSchema
 
 
 from .mixins import SKUMixin, TimestampMixin
+
+
+class ProductVariantDTO(UpdateSchema):
+    attributes: dict
+    price: condecimal(max_digits=10, decimal_places=2)
 
 
 class ProductVariant(SKUMixin, TimestampMixin, SQLModel, table=True):
@@ -15,5 +20,4 @@ class ProductVariant(SKUMixin, TimestampMixin, SQLModel, table=True):
     price: condecimal(max_digits=10, decimal_places=2)
 
     product: "Product" = Relationship(back_populates="variants")
-    inventory_items: list["InventoryItem"] = Relationship(
-        back_populates="variant")
+    inventory_items: list["InventoryItem"] = Relationship(back_populates="variant")

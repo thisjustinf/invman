@@ -1,8 +1,18 @@
 """_summary_
 """
+
 from pydantic import condecimal
-from sqlmodel import Field, SQLModel, Relationship
-from .mixins import UUIDMixin, TimestampMixin
+from sqlmodel import Field, Relationship, SQLModel
+
+from app.schemas.update import UpdateSchema
+
+from .mixins import TimestampMixin, UUIDMixin
+
+
+class InventoryItemDTO(UpdateSchema):
+    quantity: int
+    bin_location: str
+    cost_price: condecimal(max_digits=10, decimal_places=2)
 
 
 class InventoryItem(UUIDMixin, TimestampMixin, SQLModel, table=True):

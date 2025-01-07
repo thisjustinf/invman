@@ -1,16 +1,17 @@
 from typing import AsyncGenerator
 
+from fastapi.routing import APIRouter
 import pytest_asyncio
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
-    AsyncSession,
     async_sessionmaker,
     create_async_engine,
 )
 from sqlalchemy.pool import NullPool
 from sqlmodel import SQLModel
+from sqlmodel.ext.asyncio.session import AsyncSession
 from ..database.db import get_session
 from ..database.utils import create_pg_url_from_env
 
@@ -44,6 +45,7 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
         autoflush=False,
         expire_on_commit=False,
         autocommit=False,
+        class_=AsyncSession,
     )
 
     async with engine.connect() as conn:
@@ -64,7 +66,7 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
 
 
 class BaseTestRouter:
-    router = None
+    router: APIRouter | None = None
 
     @pytest_asyncio.fixture(scope="function")
     async def client(self, session):

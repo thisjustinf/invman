@@ -2,6 +2,13 @@ from datetime import datetime
 from uuid import UUID
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON
 from .mixins import UUIDMixin
+from app.schemas.update import UpdateSchema
+
+
+class InventoryTransactionDTO(UpdateSchema):
+    type: str
+    quantity: int
+    reference_number: str
 
 
 class InventoryTransaction(UUIDMixin, SQLModel, table=True):

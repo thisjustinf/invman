@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 88
+target-version = ['py313']
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "tests"]
+
+[tool.isort]
+known-first-party = ["app", "tests"]

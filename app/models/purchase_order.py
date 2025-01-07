@@ -1,9 +1,15 @@
 from datetime import date
 from pydantic import condecimal
 from sqlmodel import SQLModel, Field, Relationship
+
+from app.schemas.update import UpdateSchema
 from .mixins import AutoIncrementIDMixin, TimestampMixin
-# from .purchase_order_item import PurchaseOrderItem
-# from .supplier import Supplier
+
+
+class PurchaseOrderDTO(UpdateSchema):
+    status: str
+    expected_delivery_date: date
+    total_amount: condecimal(max_digits=10, decimal_places=2)
 
 
 class PurchaseOrder(AutoIncrementIDMixin, TimestampMixin, SQLModel, table=True):
@@ -15,5 +21,4 @@ class PurchaseOrder(AutoIncrementIDMixin, TimestampMixin, SQLModel, table=True):
     total_amount: condecimal(max_digits=10, decimal_places=2)
 
     supplier: "Supplier" = Relationship(back_populates="purchase_orders")
-    items: list["PurchaseOrderItem"] = Relationship(
-        back_populates="purchase_order")
+    items: list["PurchaseOrderItem"] = Relationship(back_populates="purchase_order")

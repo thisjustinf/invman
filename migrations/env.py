@@ -23,15 +23,18 @@ load_dotenv()
 # this is the support for migrations using the models from your app
 target_metadata = SQLModel.metadata
 
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')
-))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 __all__ = [
-    "InventoryTransaction", "Product", "PurchaseOrder",
-    "PurchaseOrderItem", "Supplier", "Warehouse",
-    "InventoryItem", "ProductVariant"
+    "InventoryTransaction",
+    "Product",
+    "PurchaseOrder",
+    "PurchaseOrderItem",
+    "Supplier",
+    "Warehouse",
+    "InventoryItem",
+    "ProductVariant",
 ]
 
 # this is the Alembic Config object, which provides
@@ -45,7 +48,7 @@ def get_url():
     password = os.getenv("POSTGRES_PASSWORD", "")
     server = os.getenv("POSTGRES_SERVER", "db")
     db = os.getenv("POSTGRES_DB", "app")
-    return f"postgresql://{user}:{password}@{server}/{db}"
+    return f"postgresql+asyncpg//{user}:{password}@{server}/{db}"
 
 
 # Set SQLAlchemy URL in alembic.ini
@@ -109,8 +112,12 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection,
-                          target_metadata=target_metadata)
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            render_as_batch=True,
+            user_module_prefix="sqlmodel.sql.sqltypes.",
+        )
 
         with context.begin_transaction():
             context.run_migrations()

@@ -1,6 +1,12 @@
 from sqlmodel import SQLModel, Relationship
+
+from app.schemas.update import UpdateSchema
 from .mixins import AutoIncrementIDMixin, TimestampMixin, SoftDeleteMixin
-# from .purchase_order import PurchaseOrder
+
+
+class SupplierDTO(UpdateSchema):
+    name: str
+    contact_info: str
 
 
 class Supplier(
@@ -11,5 +17,4 @@ class Supplier(
     name: str
     contact_info: str
 
-    purchase_orders: list["PurchaseOrder"] = Relationship(
-        back_populates="supplier")
+    purchase_orders: list["PurchaseOrder"] = Relationship(back_populates="supplier")
