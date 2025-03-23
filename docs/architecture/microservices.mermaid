@@ -1,0 +1,84 @@
+flowchart TB
+    subgraph "Client Applications"
+        WebApp[Web Application]
+        MobileApp[Mobile App]
+        IntegrationAPI[External Integration APIs]
+    end
+
+    subgraph "API Gateway"
+        Gateway[API Gateway / Load Balancer]
+    end
+
+    subgraph "Inventory Service"
+        InventoryAPI[Inventory API]
+        InventoryDB[(Inventory DB)]
+        InventoryCache[(Inventory Redis)]
+        InventoryAPI <--> InventoryDB
+        InventoryAPI <--> InventoryCache
+    end
+
+    subgraph "Warehouse Service"
+        WarehouseAPI[Warehouse API]
+        WarehouseDB[(Warehouse DB)]
+        WarehouseCache[(Warehouse Redis)]
+        WarehouseAPI <--> WarehouseDB
+        WarehouseAPI <--> WarehouseCache
+    end
+
+    subgraph "Order Service"
+        OrderAPI[Order API]
+        OrderDB[(Order DB)]
+        OrderCache[(Order Redis)]
+        OrderAPI <--> OrderDB
+        OrderAPI <--> OrderCache
+    end
+
+    subgraph "Supplier Service"
+        SupplierAPI[Supplier API]
+        SupplierDB[(Supplier DB)]
+        SupplierCache[(Supplier Redis)]
+        SupplierAPI <--> SupplierDB
+        SupplierAPI <--> SupplierCache
+    end
+
+    subgraph "User Service"
+        UserAPI[User API]
+        UserDB[(User DB)]
+        UserCache[(User Redis)]
+        UserAPI <--> UserDB
+        UserAPI <--> UserCache
+    end
+
+    subgraph "Notification Service"
+        NotificationAPI[Notification API]
+        NotificationDB[(Notification DB)]
+        NotificationAPI <--> NotificationDB
+    end
+
+    subgraph "Analytics Service"
+        AnalyticsAPI[Analytics API]
+        AnalyticsDB[(Analytics DB)]
+        AnalyticsAPI <--> AnalyticsDB
+    end
+
+    MessageBroker[Message Broker]
+    
+    WebApp --> Gateway
+    MobileApp --> Gateway
+    IntegrationAPI --> Gateway
+    
+    Gateway --> InventoryAPI
+    Gateway --> WarehouseAPI
+    Gateway --> OrderAPI
+    Gateway --> SupplierAPI
+    Gateway --> UserAPI
+    Gateway --> NotificationAPI
+    Gateway --> AnalyticsAPI
+    
+    InventoryAPI <--> MessageBroker
+    WarehouseAPI <--> MessageBroker
+    OrderAPI <--> MessageBroker
+    SupplierAPI <--> MessageBroker
+    UserAPI <--> MessageBroker
+    NotificationAPI <--> MessageBroker
+    AnalyticsAPI <--> MessageBroker
